@@ -1,0 +1,65 @@
+CREATE DATABASE alkohole
+
+USE alkohole
+
+CREATE TABLE Category (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    description TEXT
+);
+
+CREATE TABLE Country_Origin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255)
+);
+
+CREATE TABLE Product (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    category_id INT,
+    alcohol_content DECIMAL(5,2),
+    description TEXT,
+    country_origin_id INT,
+    price DECIMAL(10,2),
+    available_amount INT,
+    rating INT,
+    FOREIGN KEY (category_id) REFERENCES Category(id),
+    FOREIGN KEY (country_origin_id) REFERENCES Country_Origin(id)
+);
+
+CREATE TABLE User (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    age INT,
+    address TEXT,
+    password VARCHAR(255)
+);
+
+CREATE TABLE Opinions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT,
+    user_id INT,
+    rate INT,
+    description TEXT,
+    FOREIGN KEY (product_id) REFERENCES Product(id),
+    FOREIGN KEY (user_id) REFERENCES User(id)
+);
+
+
+CREATE TABLE Orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    date_add DATE,
+    user_id INT,
+    state_id INT,
+    FOREIGN KEY (user_id) REFERENCES User(id)
+);
+
+CREATE TABLE Order_entry (
+    order_id INT,
+    amount INT,
+    product_id INT,
+    historic_price DECIMAL(10,2),
+    FOREIGN KEY (order_id) REFERENCES Orders(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);

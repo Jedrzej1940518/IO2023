@@ -1,0 +1,7 @@
+TODO:
+-klasa dla kazdego endpointa (category, orders, product_opinions itp)
+-dokonczyc endpoint helpera dla kazdej klasy w osobnym pliku
+-poprawienie obecnego endpointhelpera żeby pobierał db tylko w wywoływaniu getterów
+
+funkcjonalności:
+
