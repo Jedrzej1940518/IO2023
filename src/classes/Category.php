@@ -1,12 +1,15 @@
 <?php
 
 class Category implements \JsonSerializable {
+
 	
 	private int $id;
 	private string $description;
 	private string $name;
-
-    public function __construct(int $id, string $name, string $description) {
+    public function jsonSerialize(): array {
+        return get_object_vars($this);
+    }
+    public function __construct(string $name, string $description, int $id = -1) {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -24,10 +27,19 @@ class Category implements \JsonSerializable {
         return $this->id;
     }
 
-    public function jsonSerialize(): array {
-        $vars = get_object_vars($this);
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
-        return $vars;
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }
 

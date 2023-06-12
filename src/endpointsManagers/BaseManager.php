@@ -2,7 +2,7 @@
 
 abstract class BaseManager {
     protected $dbh;
-    protected $allowedFields = [];
+    protected array $allowedFields = [];
 
     public function __construct(PDO $dbh) {
         $this->dbh = $dbh;
@@ -28,7 +28,12 @@ abstract class BaseManager {
         return $row ? $this->createObject($row) : null;
     }
 
-    public function insertObject(array $data) {
+    public function getObjectIdBy(string $field, $value): int
+    {
+        return $this->getObjectBy($field, $value)->getId();
+    }
+
+    public function insertObject(array $data) : int {
         $fields = implode(', ', array_keys($data));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
         $query = "INSERT INTO " . $this->tableName . " (" . $fields . ") VALUES (" . $placeholders . ")";
@@ -37,6 +42,11 @@ abstract class BaseManager {
         return $this->dbh->lastInsertId();
     }
 
+    public function removeObject($id) {
+        $sth = $this->dbh->prepare("DELETE FROM {$this->tableName} WHERE id = ?");
+        $sth->bindValue(1, $id, PDO::PARAM_INT);
+        $sth->execute();
+    }
     protected function fetch(string $orderBy = null): array {
         $orderBy = $this->sanitizeOrderBy($orderBy);
         $query = "SELECT * FROM " . $this->tableName;
