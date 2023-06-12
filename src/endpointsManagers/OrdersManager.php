@@ -14,8 +14,8 @@ class OrdersManager extends BaseManager {
         ]);
     }
 
-    public function removeOrders($id) {
-        $this->removeObject($id);
+    public function deleteOrders($id) {
+        $this->deleteObject($id);
     }
 
     protected function createObject(array $row): Orders {

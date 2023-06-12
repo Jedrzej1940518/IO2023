@@ -70,7 +70,7 @@ class Product implements \JsonSerializable {
         return $this->availableAmount;
     }
 
-    public function getRating(): int {
+    public function getRating(): ?int {
         return $this->rating;
     }
 

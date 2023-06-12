@@ -20,10 +20,10 @@ class User implements \JsonSerializable {
         $this->email = $email;
         $this->age = $age;
         $this->address = $address;
-        $this->password = $this->hashPassword($password);
+        $this->password = $password;
     }
 
-    private function hashPassword(string $password): string {
+    static public function hashPassword(string $password): string {
         return password_hash($password, PASSWORD_DEFAULT);
     }
     public function verifyPassword(string $password): bool {

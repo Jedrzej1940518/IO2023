@@ -16,8 +16,8 @@ class OpinionManager extends BaseManager {
         ]);
     }
 
-    public function removeOpinion($id) {
-        $this->removeObject($id);
+    public function deleteOpinion($id) {
+        $this->deleteObject($id);
     }
 
     protected function createObject(array $row): Opinion {

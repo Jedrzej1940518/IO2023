@@ -10,8 +10,8 @@ class CategoryManager extends BaseManager {
         return $this->insertObject(array(  'name' => $category->getName(),
                                             'description' => $category->getDescription()));
     }
-    public function removeCategory($id) {
-        $this->removeObject($id);
+    public function deleteCategory($id) {
+        $this->deleteObject($id);
     }
     protected function createObject(array $row) : Category {
         return new Category($row['name'], $row['description'], $row['id']);

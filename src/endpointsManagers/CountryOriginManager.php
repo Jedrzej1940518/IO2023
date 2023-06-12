@@ -7,14 +7,14 @@ class CountryOriginManager extends BaseManager {
     protected array $allowedFields = ['id', 'name'];
     protected string $tableName = 'country_origin';
 
-    public function insertCountryOrigin(CountryOrigin $countryOrigin) {
+    public function insertCountryOrigin(CountryOrigin $countryOrigin) : int {
         return $this->insertObject([
             'name' => $countryOrigin->getName()
         ]);
     }
 
-    public function removeCountryOrigin(int $id) {
-        $this->removeObject($id);
+    public function deleteCountryOrigin(int $id) {
+        $this->deleteObject($id);
     }
 
     protected function createObject(array $row) : CountryOrigin {

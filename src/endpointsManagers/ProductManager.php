@@ -3,7 +3,8 @@
 require_once 'BaseManager.php';
 require_once 'src/classes/Product.php';
 
-class ProductManager extends BaseManager {
+class ProductManager extends BaseManager
+{
     protected array $allowedFields = [
         'id',
         'name',
@@ -17,24 +18,40 @@ class ProductManager extends BaseManager {
     ];
     protected string $tableName = 'product';
 
-    public function insertProduct(Product $product) : int {
-        return $this->insertObject([
-                'name' => $product->getName(),
-                'category_id' => $product->getCategoryId(),
-                'alcohol_content' => $product->getAlcoholContent(),
-                'description' => $product->getDescription(),
-                'country_origin_id' => $product->getCountryOriginId(),
-                'price' => $product->getPrice(),
-                'available_amount' => $product->getAvailableAmount(),
-                'rating' => $product->getRating()
-                ]);
+    public function getProducts() : void
+    {
+        $products =  $this->getObjects();
+        echo json_encode(['status' => 'success', 'products' => $products]);
     }
 
-    public function removeProduct($id) {
-        $this->removeObject($id);
+    public function getProductById(int $id) : void
+    {
+        $product =  $this->getObjectBy('id', $id);
+        echo json_encode(['status' => 'success', 'product' => $product]);
     }
 
-    protected function createObject(array $row): Product {
+    public function insertProduct(): void
+    {
+        $data = $this->fetchDataFromRequest(true);
+        $newProductId = $this->insertObject($data);
+        echo json_encode(['status' => 'success', 'product_id' => $newProductId]);
+    }
+
+    public function editProduct(int $id): void
+    {
+        $data = $this->fetchDataFromRequest();
+        $product = $this->updateObject($id, $data);
+        echo json_encode(['status' => 'success', 'product' => $product]);
+    }
+
+    public function deleteProduct($id)
+    {
+        $this->deleteObject($id);
+        echo json_encode(['status' => 'success']);
+    }
+
+    protected function createObject(array $row): Product
+    {
         return new Product(
             $row['name'],
             $row['category_id'],

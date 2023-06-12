@@ -77,14 +77,14 @@ class TestBackend
         $this->__createOrderEntries();
 
         // Clear up database
-        $this->orderEntryManager->removeOrderEntry($this->orderEntry1->getId());
-        $this->orderEntryManager->removeOrderEntry($this->orderEntry2->getId());
-        $this->ordersManager->removeOrders($this->orders->getId());
-        $this->opinionManager->removeOpinion($this->opinion->getId());
-        $this->productManager->removeProduct($this->product->getId());
-        $this->categoryManager->removeCategory($this->category->getId());
-        $this->countryOriginManager->removeCountryOrigin($this->countryOrigin->getId());
-        $this->userManager->removeUser($this->user->getId());
+        $this->orderEntryManager->deleteOrderEntry($this->orderEntry1->getId());
+        $this->orderEntryManager->deleteOrderEntry($this->orderEntry2->getId());
+        $this->ordersManager->deleteOrders($this->orders->getId());
+        $this->opinionManager->deleteOpinion($this->opinion->getId());
+        $this->productManager->deleteProduct($this->product->getId());
+        $this->categoryManager->deleteCategory($this->category->getId());
+        $this->countryOriginManager->deleteCountryOrigin($this->countryOrigin->getId());
+        $this->userManager->deleteUser($this->user->getId());
 
         // Print table contents after removal
         echo "Category Table after removal:\n";
