@@ -17,11 +17,15 @@ class ProductManager extends BaseManager
         'rating'
     ];
     protected string $tableName = 'product';
-
     public function getProducts() : void
     {
-        $products =  $this->getObjects();
-        echo json_encode(['status' => 'success', 'products' => $products]);
+        $filters = $_GET['filters'] ?? null;
+        $page = $_GET['page'] ?? 1;
+        $limit = $_GET['limit'] ?? 50;
+
+        [$filterParts, $params] = $this->processFilters($filters);
+        $result = $this->fetchFiltered($filterParts, $params, $page,$limit);
+        echo json_encode(['status' => 'success', 'result' => $result]);
     }
 
     public function getProductById(int $id) : void
@@ -63,5 +67,44 @@ class ProductManager extends BaseManager
             $row['rating'],
             $row['id']
         );
+    }
+    private function processFilters(string $filters = null): array {
+        $filterParts = [];
+        $params = [];
+
+        if ($filters) {
+            $filters = explode(",", $filters);
+            foreach ($filters as $filter) {
+                [$key, $value] = explode(":", $filter);
+                switch ($key) {
+                    case 'name':
+                        $filterParts[] = 'name LIKE :name';
+                        $params[':name'] = '%' . $value . '%';
+                        break;
+                    case 'price_min':
+                        $filterParts[] = 'price >= :price_min';
+                        $params[':price_min'] = (float)$value;
+                        break;
+                    case 'price_max':
+                        $filterParts[] = 'price <= :price_max';
+                        $params[':price_max'] = (float)$value;
+                        break;
+                    case 'alcohol_content_min':
+                        $filterParts[] = 'alcohol_content >= :alcohol_content_min';
+                        $params[':alcohol_content_min'] = (float)$value;
+                        break;
+                    case 'alcohol_content_max':
+                        $filterParts[] = 'alcohol_content <= :alcohol_content_max';
+                        $params[':alcohol_content_max'] = (float)$value;
+                        break;
+                    case 'category_id':
+                        $filterParts[] = 'category_id = :category_id';
+                        $params[':category_id'] = (int)$value;
+                        break;
+                }
+            }
+        }
+
+        return [$filterParts, $params];
     }
 }

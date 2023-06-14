@@ -69,7 +69,45 @@ abstract class BaseManager
         }
         return $objects;
     }
+    protected function fetchFiltered(?array $filterParts = null, ?array $params = null, ?int $page = 1, ?int $limit = 50): array
+    {
+        $query = "SELECT * FROM " . $this->tableName;
 
+        if ($filterParts) {
+            $query .= " WHERE " . implode(" AND ", $filterParts);
+        }
+
+        $countQuery = "SELECT COUNT(*) FROM " . $this->tableName;
+        if ($filterParts) {
+            $countQuery .= " WHERE " . implode(" AND ", $filterParts);
+        }
+
+        $sth = $this->dbh->prepare($countQuery);
+        $sth->execute($params);
+
+        $totalObjects = $sth->fetchColumn();
+
+
+        $query .= " LIMIT :offset, :limit";
+
+        $params[':offset'] = ($page - 1) * $limit;
+        $params[':limit'] = $limit;
+
+        $sth = $this->dbh->prepare($query);
+        $sth->execute($params);
+
+        $objects = [];
+        while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+            $objects[] = $this->createObject($row);
+        }
+
+        return [
+            'currentPage' => $page,
+            'perPage' => $limit,
+            'totalObjects' => $totalObjects,
+            'data' => $objects
+        ];
+    }
     protected function fetchDataFromRequest(bool $allDataNeeded = false): array
     {
         $data = json_decode(file_get_contents('php://input'), true);

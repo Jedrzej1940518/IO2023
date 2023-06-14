@@ -9,6 +9,9 @@ class Router {
     }
 
     public function route(string $method, string $uri) {
+
+        $uri = strtok($uri, '?');  // Ignore query strings for path matching
+
         if (!isset($this->endpoints[$method])) {
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint not found']);
@@ -24,7 +27,7 @@ class Router {
         }
 
         http_response_code(404);
-        echo json_encode(['error' => 'Endpoint not found']);
+        echo json_encode(['error' => 'Endpoint not found: '.$uri]);
         exit;
     }
 }
