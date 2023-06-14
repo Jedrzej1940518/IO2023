@@ -32,7 +32,7 @@ class UserManager extends BaseManager
         }
         if (!$user->verifyPassword($data['password'])) {
             http_response_code(401);
-            echo json_encode(['error' => 'Invalid password!', 'password' => $data['password'], 'user' =>$user]);
+            echo json_encode(['error' => 'Invalid password!', 'password' => $data['password'], 'user' => $user]);
             return;
         }
         $_SESSION['user'] = $user;
@@ -51,12 +51,14 @@ class UserManager extends BaseManager
 
     public function insertUser(User $user): int
     {
-        return $this->insertObject(array('first_name' => $user->getFirstName(),
+        return $this->insertObject([
+            'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
             'age' => $user->getAge(),
             'address' => $user->getAddress(),
             'email' => $user->getEmail(),
-            'password' => $user->getPassword()));
+            'password' => $user->getPassword(),
+        ]);
     }
 
     public function deleteUser($id)
@@ -66,7 +68,15 @@ class UserManager extends BaseManager
 
     protected function createObject(array $row): User
     {
-        return new User($row['first_name'], $row['last_name'], $row['email'], $row['age'], $row['address'], $row['password'], $row['id']);
+        return new User(
+            $row['first_name'],
+            $row['last_name'],
+            $row['email'],
+            $row['age'],
+            $row['address'],
+            $row['password'],
+            $row['id']
+        );
     }
 }
 

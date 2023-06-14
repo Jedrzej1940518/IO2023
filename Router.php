@@ -1,15 +1,17 @@
 <?php
 
-class Router {
+class Router
+{
     private $endpoints = [];
 
-    public function addEndpoint(string $method, string $uri, callable $callback) {
+    public function addEndpoint(string $method, string $uri, callable $callback)
+    {
         $uri = '/^' . str_replace(['/', '{id}'], ['\/', '(\d+)'], $uri) . '$/';
         $this->endpoints[$method][$uri] = $callback;
     }
 
-    public function route(string $method, string $uri) {
-
+    public function route(string $method, string $uri)
+    {
         $uri = strtok($uri, '?');  // Ignore query strings for path matching
 
         if (!isset($this->endpoints[$method])) {
@@ -27,7 +29,7 @@ class Router {
         }
 
         http_response_code(404);
-        echo json_encode(['error' => 'Endpoint not found: '.$uri]);
+        echo json_encode(['error' => 'Endpoint not found: ' . $uri]);
         exit;
     }
 }

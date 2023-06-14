@@ -69,8 +69,13 @@ abstract class BaseManager
         }
         return $objects;
     }
-    protected function fetchFiltered(?array $filterParts = null, ?array $params = null, ?int $page = 1, ?int $limit = 50): array
-    {
+
+    protected function fetchFiltered(
+        ?array $filterParts = null,
+        ?array $params = null,
+        ?int $page = 1,
+        ?int $limit = 50
+    ): array {
         $query = "SELECT * FROM " . $this->tableName;
 
         if ($filterParts) {
@@ -105,9 +110,10 @@ abstract class BaseManager
             'currentPage' => $page,
             'perPage' => $limit,
             'totalObjects' => $totalObjects,
-            'data' => $objects
+            'data' => $objects,
         ];
     }
+
     protected function fetchDataFromRequest(bool $allDataNeeded = false): array
     {
         $data = json_decode(file_get_contents('php://input'), true);
@@ -122,10 +128,13 @@ abstract class BaseManager
         foreach ($this->allowedFields as $field) {
             if (isset($data[$field])) {
                 $filteredData[$field] = $data[$field];
-            }
-            else if($field != 'id' && $allDataNeeded){
-                echo json_encode(['status' => 'error', 'message' => 'Whole object in JSON was needed', 'data' => $data]);
-                exit;
+            } else {
+                if ($field != 'id' && $allDataNeeded) {
+                    echo json_encode(
+                        ['status' => 'error', 'message' => 'Whole object in JSON was needed', 'data' => $data]
+                    );
+                    exit;
+                }
             }
         }
         return $filteredData;

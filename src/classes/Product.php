@@ -1,6 +1,7 @@
 <?php
 
-class Product implements \JsonSerializable {
+class Product implements \JsonSerializable
+{
 
     private int $id;
     private string $name;
@@ -12,7 +13,8 @@ class Product implements \JsonSerializable {
     private int $availableAmount;
     private int $rating;
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
 
@@ -38,39 +40,48 @@ class Product implements \JsonSerializable {
         $this->rating = $rating;
     }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function getCategoryId(): int {
+    public function getCategoryId(): int
+    {
         return $this->categoryId;
     }
 
-    public function getAlcoholContent(): float {
+    public function getAlcoholContent(): float
+    {
         return $this->alcoholContent;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-    public function getCountryOriginId(): int {
+    public function getCountryOriginId(): int
+    {
         return $this->countryOriginId;
     }
 
-    public function getPrice(): float {
+    public function getPrice(): float
+    {
         return $this->price;
     }
 
-    public function getAvailableAmount(): int {
+    public function getAvailableAmount(): int
+    {
         return $this->availableAmount;
     }
 
-    public function getRating(): ?int {
+    public function getRating(): ?int
+    {
         return $this->rating;
     }
 

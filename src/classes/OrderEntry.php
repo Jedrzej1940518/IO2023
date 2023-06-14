@@ -1,6 +1,7 @@
 <?php
 
-class OrderEntry implements \JsonSerializable {
+class OrderEntry implements \JsonSerializable
+{
 
     private int $id;
 
@@ -9,11 +10,13 @@ class OrderEntry implements \JsonSerializable {
     private int $productId;
     private float $historicPrice;
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
 
-    public function __construct(int $amount, int $productId, float $historicPrice, int $orderId, int $id =-1) {
+    public function __construct(int $amount, int $productId, float $historicPrice, int $orderId, int $id = -1)
+    {
         $this->id = $id;
         $this->orderId = $orderId;
         $this->amount = $amount;
@@ -21,21 +24,26 @@ class OrderEntry implements \JsonSerializable {
         $this->historicPrice = $historicPrice;
     }
 
-    public function getOrderId(): int {
+    public function getOrderId(): int
+    {
         return $this->orderId;
     }
 
-    public function getAmount(): int {
+    public function getAmount(): int
+    {
         return $this->amount;
     }
 
-    public function getProductId(): int {
+    public function getProductId(): int
+    {
         return $this->productId;
     }
 
-    public function getHistoricPrice(): float {
+    public function getHistoricPrice(): float
+    {
         return $this->historicPrice;
     }
+
     public function getId(): int
     {
         return $this->id;

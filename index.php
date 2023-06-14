@@ -1,4 +1,5 @@
 <?php
+
 require_once 'Router.php';
 require_once 'DBConnection.php';
 require_once 'src/endpointsManagers/UserManager.php';
