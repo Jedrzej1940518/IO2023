@@ -1,6 +1,7 @@
 <?php
 
-class Orders implements \JsonSerializable {
+class Orders implements \JsonSerializable
+{
 
     private int $id;
     private $orderDate;
@@ -13,32 +14,39 @@ class Orders implements \JsonSerializable {
     public const PAYMENT_FAILED = 2;
     public const ORDER_FINISHED = 3;
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
 
-    public function __construct($orderDate, int $userId, $stateId = self::ORDER_STARTED, int $id = -1) {
+    public function __construct($orderDate, int $userId, $stateId = self::ORDER_STARTED, int $id = -1)
+    {
         $this->id = $id;
         $this->orderDate = $orderDate;
         $this->userId = $userId;
         $this->stateId = $stateId;
     }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getOrderDate() {
+    public function getOrderDate()
+    {
         return $this->orderDate;
     }
 
-    public function getUserId(): int {
+    public function getUserId(): int
+    {
         return $this->userId;
     }
 
-    public function getStateId(): string {
+    public function getStateId(): string
+    {
         return $this->stateId;
     }
+
     public function setId(int $id): void
     {
         $this->id = $id;

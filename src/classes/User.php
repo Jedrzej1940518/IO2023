@@ -1,6 +1,7 @@
 <?php
 
-class User implements \JsonSerializable {
+class User implements \JsonSerializable
+{
 
 
     private int $id;
@@ -13,7 +14,15 @@ class User implements \JsonSerializable {
     private string $password;
 
 
-    public function __construct(string $firstName, string $lastName, string $email, int $age, string $address, string $password, int $id = -1) {
+    public function __construct(
+        string $firstName,
+        string $lastName,
+        string $email,
+        int $age,
+        string $address,
+        string $password,
+        int $id = -1
+    ) {
         $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -23,32 +32,43 @@ class User implements \JsonSerializable {
         $this->password = $password;
     }
 
-    static public function hashPassword(string $password): string {
+    static public function hashPassword(string $password): string
+    {
         return password_hash($password, PASSWORD_DEFAULT);
     }
-    public function verifyPassword(string $password): bool {
+
+    public function verifyPassword(string $password): bool
+    {
         return password_verify($password, $this->password);
     }
-    public function jsonSerialize(): array {
+
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
-    public function getId(): int {
+
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getFirstName(): string {
+    public function getFirstName(): string
+    {
         return $this->firstName;
     }
 
-    public function getLastName(): string {
+    public function getLastName(): string
+    {
         return $this->lastName;
     }
 
-    public function getAge(): int {
+    public function getAge(): int
+    {
         return $this->age;
     }
 
-    public function getAddress(): string {
+    public function getAddress(): string
+    {
         return $this->address;
     }
 
@@ -56,6 +76,7 @@ class User implements \JsonSerializable {
     {
         return $this->email;
     }
+
     public function getPassword(): string
     {
         return $this->password;
@@ -70,10 +91,12 @@ class User implements \JsonSerializable {
     {
         $this->password = $password;
     }
+
     public function setId(int $id): void
     {
         $this->id = $id;
     }
+
     public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;

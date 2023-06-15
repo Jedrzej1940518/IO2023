@@ -1,6 +1,7 @@
 <?php
 
-class CountryOrigin implements \JsonSerializable {
+class CountryOrigin implements \JsonSerializable
+{
 
     private int $id;
     private string $name;
@@ -11,10 +12,12 @@ class CountryOrigin implements \JsonSerializable {
         $this->name = $name;
     }
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
-    public function getId() : int
+
+    public function getId(): int
     {
         return $this->id;
     }
@@ -23,7 +26,8 @@ class CountryOrigin implements \JsonSerializable {
     {
         $this->id = $id;
     }
-    public function getName() : string
+
+    public function getName(): string
     {
         return $this->name;
     }

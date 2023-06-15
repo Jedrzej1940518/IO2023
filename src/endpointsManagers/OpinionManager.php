@@ -3,24 +3,26 @@
 require_once 'BaseManager.php';
 require_once 'src/classes/Opinion.php';
 
-class OpinionManager extends BaseManager {
+class OpinionManager extends BaseManager
+{
     protected array $allowedFields = ['id', 'product_id', 'user_id', 'rate', 'description'];
     protected string $tableName = 'Opinion';
 
-    public function insertOpinion(Opinion $opinion) : int {
-        return $this->insertObject([
-            'product_id' => $opinion->getProductId(),
-            'user_id' => $opinion->getUserId(),
-            'rate' => $opinion->getRate(),
-            'description' => $opinion->getDescription()
-        ]);
+    public function insertOpinion($product_id)
+    {
+        $data = $this->fetchDataFromRequest(true);
+        $data['product_id'] = $product_id;
+        $newId = $this->insertObject($data);
+        echo json_encode(['status' => 'success', 'order_entry_id' => $newId]);
     }
 
-    public function deleteOpinion($id) {
+    public function deleteOpinion($id)
+    {
         $this->deleteObject($id);
     }
 
-    protected function createObject(array $row): Opinion {
+    protected function createObject(array $row): Opinion
+    {
         $opinion = new Opinion(
             $row['user_id'],
             $row['product_id'],
@@ -29,5 +31,18 @@ class OpinionManager extends BaseManager {
             $row['id']
         );
         return $opinion;
+    }
+
+    public function getOpinions($product_id)
+    {
+        $result = $this->fetchFiltered(['product_id = :id'], [':id' => $product_id]);
+        echo json_encode($result);
+    }
+
+    public function updateOpinion($id)
+    {
+        $data = $this->fetchDataFromRequest();
+        $opinion = $this->updateObject($id, $data);
+        echo json_encode(['status' => 'success', 'opinion' => $opinion]);
     }
 }

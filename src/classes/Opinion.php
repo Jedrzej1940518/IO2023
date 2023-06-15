@@ -17,10 +17,12 @@ class Opinion implements \JsonSerializable
         $this->description = $description;
     }
 
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         return get_object_vars($this);
     }
-    public function getId() : int
+
+    public function getId(): int
     {
         return $this->id;
     }
@@ -30,7 +32,7 @@ class Opinion implements \JsonSerializable
         $this->id = $id;
     }
 
-    public function getProductId() : int
+    public function getProductId(): int
     {
         return $this->productId;
     }
@@ -40,7 +42,7 @@ class Opinion implements \JsonSerializable
         $this->productId = $productId;
     }
 
-    public function getUserId() :int
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -50,7 +52,7 @@ class Opinion implements \JsonSerializable
         $this->userId = $userId;
     }
 
-    public function getRate() :float
+    public function getRate(): float
     {
         return $this->rate;
     }
@@ -60,7 +62,7 @@ class Opinion implements \JsonSerializable
         $this->rate = $rate;
     }
 
-    public function getDescription() :string
+    public function getDescription(): string
     {
         return $this->description;
     }
