@@ -8,7 +8,7 @@ class CategoryManager extends BaseManager
     protected array $allowedFields = ['id', 'name', 'description'];
     protected string $tableName = 'category';
 
-    public function insertCategory(Category $category)
+    public function insertCategory()
     {
         $this->insertFromRequest('category');
     }

@@ -16,19 +16,21 @@ class OrderEntryManager extends BaseManager
         echo json_encode(['status' => 'success', 'order_entry_id' => $newId]);
     }
 
-    public function deleteOrderEntry($id, $product_id)
+    public function deleteOrderEntry($id)
     {
-        $this->deleteObject($id, 'product_id = :product_id', ['product_id' => $product_id]);
+        $this->deleteObject($id);
+        echo json_encode(['status' => 'success']);
     }
 
     protected function createObject(array $row): OrderEntry
     {
+
         return new OrderEntry(
-            $row['id'],
             $row['amount'],
             $row['product_id'],
             $row['historic_price'],
-            $row['order_id']
+            $row['order_id'],
+            $row['id']
         );
     }
 
@@ -38,10 +40,10 @@ class OrderEntryManager extends BaseManager
         echo json_encode($result);
     }
 
-    public function updateOrderEntry($id, $product_id)
+    public function updateOrderEntry($id)
     {
         $data = $this->fetchDataFromRequest();
-        $orderEntry = $this->updateObject($id, $data, 'product_id = :product_id', ['product_id' => $product_id]);
+        $orderEntry = $this->updateObject($id, $data);
         echo json_encode(['status' => 'success', 'order_entry' => $orderEntry]);
     }
 }

@@ -28,6 +28,8 @@ require_once 'src/endpointsManagers/OrderEntryManager.php';
 require_once 'src/endpointsManagers/OrdersManager.php';
 require_once 'src/endpointsManagers/OpinionManager.php';
 
+session_start();
+
 $dbh = (new DBConnection())->getDBH();
 $router = new Router();
 
@@ -57,13 +59,13 @@ $router->addEndpoint('DELETE', '/orders/{id}', [$ordersManager, 'deleteOrder']);
 
 $orderEntryManager = new OrderEntryManager($dbh);
 $router->addEndpoint('GET', '/order_entries/{id}', [$orderEntryManager, 'getOrderEntries']);
-$router->addEndpoint('POST', '/order_entries/{id}', [$orderEntryManager, 'getOrderEntries']);
-$router->addEndpoint('PUT', '/order_entries/{id}/{product_id}', [$orderEntryManager, 'updateOrderEntry']);
-$router->addEndpoint('DELETE', '/order_entries/{id}/{product_id}', [$orderEntryManager, 'deleteOrderEntry']);
+$router->addEndpoint('POST', '/order_entries/{id}', [$orderEntryManager, 'insertOrderEntry']);
+$router->addEndpoint('PUT', '/order_entries/{id}', [$orderEntryManager, 'updateOrderEntry']);
+$router->addEndpoint('DELETE', '/order_entries/{id}', [$orderEntryManager, 'deleteOrderEntry']);
 
 $opinionManager = new OpinionManager($dbh);
-$router->addEndpoint('GET', '/products_opinions/{product_id}', [$opinionManager, 'getOpinions']);
-$router->addEndpoint('POST', '/products_opinions/{product_id}', [$opinionManager, 'insertOpinion']);
+$router->addEndpoint('GET', '/products_opinions/{id}', [$opinionManager, 'getOpinions']);   //{id] is PRODCUT ID !!! not opinion id!!
+$router->addEndpoint('POST', '/products_opinions', [$opinionManager, 'insertOpinion']);
 $router->addEndpoint('PUT', '/products_opinions/{id}', [$opinionManager, 'updateOpinion']);
 $router->addEndpoint('DELETE', '/products_opinions/{id}', [$opinionManager, 'deleteOpinion']);
 
