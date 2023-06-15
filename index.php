@@ -1,5 +1,16 @@
 <?php
 
+require_once 'Router.php';
+require_once 'DBConnection.php';
+require_once 'src/endpointsManagers/UserManager.php';
+require_once 'src/endpointsManagers/ProductManager.php';
+require_once 'src/endpointsManagers/CategoryManager.php';
+require_once 'src/endpointsManagers/OrderEntryManager.php';
+require_once 'src/endpointsManagers/OrdersManager.php';
+require_once 'src/endpointsManagers/OpinionManager.php';
+
+session_start();
+
 /* Handle CORS */
 
 // Specify domains from which requests are allowed
@@ -18,17 +29,6 @@ header('Access-Control-Max-Age: 86400');
 if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
     exit();
 }
-
-require_once 'Router.php';
-require_once 'DBConnection.php';
-require_once 'src/endpointsManagers/UserManager.php';
-require_once 'src/endpointsManagers/ProductManager.php';
-require_once 'src/endpointsManagers/CategoryManager.php';
-require_once 'src/endpointsManagers/OrderEntryManager.php';
-require_once 'src/endpointsManagers/OrdersManager.php';
-require_once 'src/endpointsManagers/OpinionManager.php';
-
-session_start();
 
 $dbh = (new DBConnection())->getDBH();
 $router = new Router();
