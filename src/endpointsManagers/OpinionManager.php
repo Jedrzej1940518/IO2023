@@ -8,14 +8,12 @@ class OpinionManager extends BaseManager
     protected array $allowedFields = ['id', 'product_id', 'user_id', 'rate', 'description'];
     protected string $tableName = 'Opinion';
 
-    public function insertOpinion(Opinion $opinion): int
+    public function insertOpinion($product_id)
     {
-        return $this->insertObject([
-            'product_id' => $opinion->getProductId(),
-            'user_id' => $opinion->getUserId(),
-            'rate' => $opinion->getRate(),
-            'description' => $opinion->getDescription(),
-        ]);
+        $data = $this->fetchDataFromRequest(true);
+        $data['product_id'] = $product_id;
+        $newId = $this->insertObject($data);
+        echo json_encode(['status' => 'success', 'order_entry_id' => $newId]);
     }
 
     public function deleteOpinion($id)
@@ -33,5 +31,18 @@ class OpinionManager extends BaseManager
             $row['id']
         );
         return $opinion;
+    }
+
+    public function getOpinions($product_id)
+    {
+        $result = $this->fetchFiltered(['product_id = :id'], [':id' => $product_id]);
+        echo json_encode($result);
+    }
+
+    public function updateOpinion($id)
+    {
+        $data = $this->fetchDataFromRequest();
+        $opinion = $this->updateObject($id, $data);
+        echo json_encode(['status' => 'success', 'opinion' => $opinion]);
     }
 }

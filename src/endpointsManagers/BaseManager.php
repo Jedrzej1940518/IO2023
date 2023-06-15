@@ -48,11 +48,16 @@ abstract class BaseManager
         return $this->dbh->lastInsertId();
     }
 
-    public function deleteObject($id)
+    public function deleteObject($id, ?string $additionalWhere = null, array $additionalWhereParams = [])
     {
-        $sth = $this->dbh->prepare("DELETE FROM {$this->tableName} WHERE id = ?");
-        $sth->bindValue(1, $id, PDO::PARAM_INT);
-        $sth->execute();
+        $where = ' WHERE id = :id';
+        if ($additionalWhere) {
+            $where .= ' AND ' . $additionalWhere;
+        }
+
+        $sth = $this->dbh->prepare("DELETE FROM {$this->tableName}" . $where);
+        $additionalWhereParams['id'] = $id;
+        $sth->execute($additionalWhereParams);
     }
 
     protected function fetch(string $orderBy = null): array
@@ -140,8 +145,12 @@ abstract class BaseManager
         return $filteredData;
     }
 
-    protected function updateObject(int $id, array $data)
-    {
+    protected function updateObject(
+        int $id,
+        array $data,
+        ?string $additionalWhere = null,
+        array $additionalWhereParams = []
+    ) {
         if (empty($data)) {
             http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'No data to update']);
@@ -153,10 +162,15 @@ abstract class BaseManager
             $setClause .= "`$field` = :$field, ";
         }
         $setClause = rtrim($setClause, ', ');
+        $where = ' WHERE id = :id';
+        if ($additionalWhere) {
+            $where .= ' AND ' . $additionalWhere;
+        }
 
-        $query = "UPDATE `{$this->tableName}` SET $setClause WHERE id = :id";
+        $query = "UPDATE `{$this->tableName}` SET $setClause" . $where;
         $sth = $this->dbh->prepare($query);
         $data['id'] = $id;
+        $data = array_merge($data, $additionalWhereParams);
         $sth->execute($data);
         return $this->createObject($data);
     }
@@ -169,5 +183,19 @@ abstract class BaseManager
     public function toJSON(?array $objects): string
     {
         return json_encode($objects);
+    }
+
+    public function insertFromRequest(string $objectName)
+    {
+        $data = $this->fetchDataFromRequest(true);
+        $newId = $this->insertObject($data);
+        echo json_encode(['status' => 'success', $objectName . '_id' => $newId]);
+    }
+
+    public function updateObjectFromRequest($id, string $objectName)
+    {
+        $data = $this->fetchDataFromRequest();
+        $object = $this->updateObject($id, $data);
+        echo json_encode(['status' => 'success', $objectName => $object]);
     }
 }

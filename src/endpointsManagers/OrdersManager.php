@@ -8,16 +8,12 @@ class OrdersManager extends BaseManager
     protected array $allowedFields = ['id', 'order_date', 'user_id', 'state_id'];
     protected string $tableName = 'orders';
 
-    public function insertOrders(Orders $order): int
+    public function insertOrder()
     {
-        return $this->insertObject([
-            'order_date' => $order->getOrderDate(),
-            'user_id' => $order->getUserId(),
-            'state_id' => $order->getStateId(),
-        ]);
+        $this->insertFromRequest('order');
     }
 
-    public function deleteOrders($id)
+    public function deleteOrder($id)
     {
         $this->deleteObject($id);
     }
@@ -30,5 +26,38 @@ class OrdersManager extends BaseManager
             $row['state_id'],
             $row['id']
         );
+    }
+
+    private function getUser(): User|false
+    {
+        return $_SESSION['user'] ?? false;
+    }
+
+    public function getOrders()
+    {
+        if (!($user = $this->getUser())) {
+            http_response_code(401);
+            echo json_encode(['error' => 'User not logged in!']);
+        }
+
+        $result = $this->fetchFiltered(['user_id = :id'], [':id' => $user->getId()]);
+        echo json_encode($result);
+    }
+
+    public function getOrder($id)
+    {
+        if (!($user = $this->getUser())) {
+            http_response_code(401);
+            echo json_encode(['error' => 'User not logged in!']);
+        }
+
+        $result = $this->fetchFiltered(['user_id = :user_id', 'id = :id'], [':user_id' => $user->getId(), ':id' => $id]
+        );
+        echo json_encode($result);
+    }
+
+    public function updateOrder($id)
+    {
+        $this->updateObjectFromRequest($id, 'order');
     }
 }

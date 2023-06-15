@@ -37,16 +37,12 @@ class ProductManager extends BaseManager
 
     public function insertProduct(): void
     {
-        $data = $this->fetchDataFromRequest(true);
-        $newProductId = $this->insertObject($data);
-        echo json_encode(['status' => 'success', 'product_id' => $newProductId]);
+        $this->insertFromRequest('product');
     }
 
     public function editProduct(int $id): void
     {
-        $data = $this->fetchDataFromRequest();
-        $product = $this->updateObject($id, $data);
-        echo json_encode(['status' => 'success', 'product' => $product]);
+        $this->updateObjectFromRequest($id, 'product');
     }
 
     public function deleteProduct($id)
