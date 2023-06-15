@@ -62,7 +62,8 @@ class ProductManager extends BaseManager
             $row['price'],
             $row['available_amount'],
             $row['rating'],
-            $row['id']
+            $row['id'],
+            $row['image']
         );
     }
 

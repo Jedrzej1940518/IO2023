@@ -8,6 +8,7 @@ class Product implements \JsonSerializable
     private int $categoryId;
     private float $alcoholContent;
     private string $description;
+    private string $image;
     private int $countryOriginId;
     private float $price;
     private int $availableAmount;
@@ -27,7 +28,8 @@ class Product implements \JsonSerializable
         float $price,
         int $availableAmount,
         int $rating,
-        int $id = -1
+        int $id = -1,
+        string $image
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -38,6 +40,7 @@ class Product implements \JsonSerializable
         $this->price = $price;
         $this->availableAmount = $availableAmount;
         $this->rating = $rating;
+        $this->image = $image;
     }
 
     public function getId(): int
@@ -73,6 +76,10 @@ class Product implements \JsonSerializable
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+    public function getImage() {
+        return base64_encode($this->image);
     }
 
     public function getAvailableAmount(): int
@@ -128,5 +135,10 @@ class Product implements \JsonSerializable
     public function setRating(int $rating): void
     {
         $this->rating = $rating;
+    }
+
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
     }
 }

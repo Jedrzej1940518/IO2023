@@ -23,6 +23,7 @@ CREATE TABLE Product (
     price DECIMAL(10,2),
     available_amount INT,
     rating INT,
+    image longblob NOT NULL,
     FOREIGN KEY (category_id) REFERENCES Category(id),
     FOREIGN KEY (country_origin_id) REFERENCES Country_Origin(id)
 );
