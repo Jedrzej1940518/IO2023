@@ -28,8 +28,8 @@ class Product implements \JsonSerializable
         float $price,
         int $availableAmount,
         int $rating,
-        int $id = -1,
-        string $image
+        string $image = "",
+        int $id = -1
     ) {
         $this->id = $id;
         $this->name = $name;
