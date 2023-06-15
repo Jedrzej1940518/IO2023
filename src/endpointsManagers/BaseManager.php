@@ -172,7 +172,7 @@ abstract class BaseManager
         $data['id'] = $id;
         $data = array_merge($data, $additionalWhereParams);
         $sth->execute($data);
-        return $this->createObject($data);
+        return $this->getObjectBy('id', $id);
     }
 
     protected function sanitizeOrderBy(string $orderBy = null): string

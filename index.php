@@ -6,6 +6,7 @@ require_once 'src/endpointsManagers/UserManager.php';
 require_once 'src/endpointsManagers/ProductManager.php';
 require_once 'src/endpointsManagers/CategoryManager.php';
 require_once 'src/endpointsManagers/OrderEntryManager.php';
+require_once 'src/endpointsManagers/OrdersManager.php';
 require_once 'src/endpointsManagers/OpinionManager.php';
 
 $dbh = (new DBConnection())->getDBH();
