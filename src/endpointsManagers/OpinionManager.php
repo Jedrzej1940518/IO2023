@@ -8,12 +8,11 @@ class OpinionManager extends BaseManager
     protected array $allowedFields = ['id', 'product_id', 'user_id', 'rate', 'description'];
     protected string $tableName = 'Opinion';
 
-    public function insertOpinion($product_id)
+    public function insertOpinion()
     {
         $data = $this->fetchDataFromRequest(true);
-        $data['product_id'] = $product_id;
         $newId = $this->insertObject($data);
-        echo json_encode(['status' => 'success', 'order_entry_id' => $newId]);
+        echo json_encode(['status' => 'success', 'opinion_id' => $newId]);
     }
 
     public function deleteOpinion($id)
