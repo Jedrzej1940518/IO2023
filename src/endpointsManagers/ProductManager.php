@@ -15,6 +15,7 @@ class ProductManager extends BaseManager
         'price',
         'available_amount',
         'rating',
+        'image'
     ];
     protected string $tableName = 'product';
 

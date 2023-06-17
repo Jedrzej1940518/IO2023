@@ -79,7 +79,7 @@ class Product implements \JsonSerializable
     }
 
     public function getImage() {
-        return base64_encode($this->image);
+        return $this->image;
     }
 
     public function getAvailableAmount(): int

@@ -8,6 +8,7 @@ require_once 'src/endpointsManagers/CategoryManager.php';
 require_once 'src/endpointsManagers/OrderEntryManager.php';
 require_once 'src/endpointsManagers/OrdersManager.php';
 require_once 'src/endpointsManagers/OpinionManager.php';
+require_once 'src/endpointsManagers/CountryOriginManager.php';
 
 session_start();
 
@@ -68,5 +69,13 @@ $router->addEndpoint('GET', '/products_opinions/{id}', [$opinionManager, 'getOpi
 $router->addEndpoint('POST', '/products_opinions', [$opinionManager, 'insertOpinion']);
 $router->addEndpoint('PUT', '/products_opinions/{id}', [$opinionManager, 'updateOpinion']);
 $router->addEndpoint('DELETE', '/products_opinions/{id}', [$opinionManager, 'deleteOpinion']);
+
+$countyOriginManager = new CountryOriginManager($dbh);
+$router->addEndpoint('POST', '/country_origin', [$countyOriginManager, 'insertCountryOrigin']);
+$router->addEndpoint('GET', '/country_origin', [$countyOriginManager, 'getCountries']);
+$router->addEndpoint('GET', '/country_origin/{id', [$countyOriginManager, 'getCountryById']);
+$router->addEndpoint('PUT', '/country_origin/{id}', [$countyOriginManager, 'editCountryOrigin']);
+$router->addEndpoint('DELETE', '/country_origin/{id}', [$countyOriginManager, 'deleteCountryOrigin']);
+
 
 $router->route($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

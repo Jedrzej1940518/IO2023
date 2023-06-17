@@ -6,6 +6,8 @@ abstract class BaseManager
     protected array $allowedFields = [];
     protected array $requiredFetchData = [];
 
+    protected string $tableName = "";
+
     public function __construct(PDO $dbh)
     {
         $this->dbh = $dbh;
