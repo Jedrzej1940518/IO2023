@@ -36,7 +36,7 @@ $router = new Router();
 $userManager = new UserManager($dbh);
 $router->addEndpoint('POST', '/register', [$userManager, 'register']);
 $router->addEndpoint('POST', '/login', [$userManager, 'login']);
-$router->addEndpoint('GET', '/me', [$userManager, 'me']);
+$router->addEndpoint('GET', '/me/{id}', [$userManager, 'me']);
 
 $productManager = new ProductManager($dbh);
 $router->addEndpoint('GET', '/products', [$productManager, 'getProducts']);

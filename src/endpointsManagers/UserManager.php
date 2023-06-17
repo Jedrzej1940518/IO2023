@@ -39,14 +39,15 @@ class UserManager extends BaseManager
         echo json_encode(['status' => 'success', 'user' => $user]);
     }
 
-    public function me()
+    public function me($id)
     {
-        if (isset($_SESSION['user'])) {
-            echo json_encode(['user' => $_SESSION['user']]);
-        } else {
+        $user = $this->getObjectBy("id", $id);
+        if(!$user)
+        {
             http_response_code(401);
-            echo json_encode(['error' => 'Not logged in']);
+            echo json_encode(['error' => 'No user with this id!', 'id' => $id]);
         }
+        echo json_encode(['status' => 'success', 'user' => $user]);
     }
 
     public function insertUser(User $user): int

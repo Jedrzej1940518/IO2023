@@ -6,8 +6,8 @@ class DBConnection
     {
         $host = 'localhost';
         $db = 'alkohole';
-        $user = 'root';
-        $pass = 'admin';
+        $user = 'jedrzej';
+        $pass = 'yo';
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

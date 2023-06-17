@@ -46,13 +46,7 @@ class OrdersManager extends BaseManager
 
     public function getOrder($id)
     {
-        if (!($user = $this->getUser())) {
-            http_response_code(401);
-            echo json_encode(['error' => 'User not logged in!']);
-        }
-
-        $result = $this->fetchFiltered(['user_id = :user_id', 'id = :id'], [':user_id' => $user->getId(), ':id' => $id]
-        );
+        $result = $this->fetchFiltered(['user_id = :user_id'], [':user_id' => $id]);
         echo json_encode($result);
     }
 
