@@ -73,7 +73,7 @@ $router->addEndpoint('DELETE', '/products_opinions/{id}', [$opinionManager, 'del
 $countyOriginManager = new CountryOriginManager($dbh);
 $router->addEndpoint('POST', '/country_origin', [$countyOriginManager, 'insertCountryOrigin']);
 $router->addEndpoint('GET', '/country_origin', [$countyOriginManager, 'getCountries']);
-$router->addEndpoint('GET', '/country_origin/{id', [$countyOriginManager, 'getCountryById']);
+$router->addEndpoint('GET', '/country_origin/{id}', [$countyOriginManager, 'getCountryById']);
 $router->addEndpoint('PUT', '/country_origin/{id}', [$countyOriginManager, 'editCountryOrigin']);
 $router->addEndpoint('DELETE', '/country_origin/{id}', [$countyOriginManager, 'deleteCountryOrigin']);
 
