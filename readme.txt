@@ -1,1 +1,0 @@
-Wstepna dokumentacja:
