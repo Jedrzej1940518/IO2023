@@ -2,11 +2,20 @@
 
 require_once 'BaseManager.php';
 require_once 'src/classes/Opinion.php';
+require_once 'src/endpointsManagers/UserManager.php';
 
 class OpinionManager extends BaseManager
 {
     protected array $allowedFields = ['id', 'product_id', 'user_id', 'rate', 'description'];
     protected string $tableName = 'Opinion';
+
+    private UserManager $userManager;
+
+    public function __construct(PDO $dbh, UserManager $userManager)
+    {
+        $this->dbh = $dbh;
+        $this->userManager = $userManager;
+    }
 
     public function insertOpinion()
     {
@@ -23,7 +32,7 @@ class OpinionManager extends BaseManager
     protected function createObject(array $row): Opinion
     {
         $opinion = new Opinion(
-            $row['user_id'],
+            $this->userManager->getObjectBy("id", $row['product_id']),
             $row['product_id'],
             $row['rate'],
             $row['description'],

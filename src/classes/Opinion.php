@@ -4,15 +4,15 @@ class Opinion implements \JsonSerializable
 {
     private int $id;
     private int $productId;
-    private int $userId;
+    private User $user;
     private int $rate; //0-5 per opinion
     private string $description;
 
-    public function __construct(int $userId, int $productId, int $rate, string $description, int $id = -1)
+    public function __construct(User $user, int $productId, int $rate, string $description, int $id = -1)
     {
         $this->id = $id;
         $this->productId = $productId;
-        $this->userId = $userId;
+        $this->user = $user;
         $this->rate = $rate;
         $this->description = $description;
     }
@@ -42,14 +42,14 @@ class Opinion implements \JsonSerializable
         $this->productId = $productId;
     }
 
-    public function getUserId(): int
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId($userId): void
+    public function setUser($user): void
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     public function getRate(): float

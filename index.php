@@ -64,7 +64,7 @@ $router->addEndpoint('POST', '/order_entries/{id}', [$orderEntryManager, 'insert
 $router->addEndpoint('PUT', '/order_entries/{id}', [$orderEntryManager, 'updateOrderEntry']);
 $router->addEndpoint('DELETE', '/order_entries/{id}', [$orderEntryManager, 'deleteOrderEntry']);
 
-$opinionManager = new OpinionManager($dbh);
+$opinionManager = new OpinionManager($dbh, $userManager);
 $router->addEndpoint('GET', '/products_opinions/{id}', [$opinionManager, 'getOpinions']);   //{id] is PRODCUT ID !!! not opinion id!!
 $router->addEndpoint('POST', '/products_opinions', [$opinionManager, 'insertOpinion']);
 $router->addEndpoint('PUT', '/products_opinions/{id}', [$opinionManager, 'updateOpinion']);
