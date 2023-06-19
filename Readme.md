@@ -247,7 +247,7 @@ Wstepna dokumentacja:
             "product_id": 40,
             "user_id": 36,
             "rate": 4,
-            "description": "ziomus tego sie nie da pic",
+            "description": "niestety, walory smakowe pozostawiają wiele do życzenia",
             "opinion_date":"2023-06-15 14:25:45"
         }
         ```
@@ -262,7 +262,7 @@ Wstepna dokumentacja:
 
         ```
         {
-            "description": "nie no, jednak smakuje lepiej jak wychodzi"
+            "description": "tani trunek na imprezy"
         }
         ```
     </details>
